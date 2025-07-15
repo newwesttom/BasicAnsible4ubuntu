@@ -1,0 +1,19 @@
+- name: Create directory for SSL certs
+  file:
+    path: /etc/ssl/private
+    state: directory
+    mode: '0755'
+
+- name: Generate private key
+  community.crypto.openssl_privatekey:
+    path: "{{ ssl_key_path }}"
+    size: 2048
+    type: RSA
+
+- name: Generate self-signed certificate
+  community.crypto.x509_certificate:
+    path: "{{ ssl_cert_path }}"
+    privatekey_path: "{{ ssl_key_path }}"
+    provider: selfsigned
+    selfsigned_not_after: "+365d"
+

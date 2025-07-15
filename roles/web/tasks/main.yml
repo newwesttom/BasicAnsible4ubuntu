@@ -1,0 +1,26 @@
+- name: Ensure Apache is installed
+  apt:
+    name: apache2
+    state: present
+    update_cache: yes
+
+- name: Enable SSL module
+  command: a2enmod ssl
+  notify: Restart Apache
+
+- name: Deploy SSL Apache config
+  template:
+    src: ssl-site.conf.j2
+    dest: /etc/apache2/sites-available/ssl-site.conf
+  tags: [apache, ssl]
+
+- name: Enable SSL site
+  command: a2ensite ssl-site.conf
+  notify: Restart Apache
+  tags: [apache, ssl]
+
+- name: Restart Apache
+  service:
+    name: apache2
+    state: restarted
+  tags: [apache, ssl]

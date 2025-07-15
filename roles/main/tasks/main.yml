@@ -1,0 +1,12 @@
+- name: Create /opt/software directory
+  file:
+    path: /opt/software
+    state: directory
+    mode: '0755'
+
+- name: Upload script to /opt/software
+  copy:
+    src: "{{ script_source }}"
+    dest: "{{ script_dest }}"
+    mode: '0755'
+  

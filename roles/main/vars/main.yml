@@ -1,0 +1,3 @@
+script_source: ./myscript.sh
+script_dest: /opt/software/myscript.sh
+

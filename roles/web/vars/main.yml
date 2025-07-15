@@ -1,0 +1,2 @@
+ssl_cert_path: /etc/ssl/certs/apache-selfsigned.crt
+ssl_key_path: /etc/ssl/private/apache-selfsigned.key

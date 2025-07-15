@@ -1,0 +1,44 @@
+- name: Ensure UFW is installed
+  apt:
+    name: ufw
+    state: present
+    update_cache: yes
+  tags: [firewall]
+
+- name: Set default UFW policies
+  ufw:
+    state: enabled
+    policy: deny
+    direction: incoming
+  tags: [firewall]
+
+- name: Allow SSH (port 22)
+  ufw:
+    rule: allow
+    name: OpenSSH
+  tags: [firewall]
+
+- name: Allow HTTPS (port 443)
+  ufw:
+    rule: allow
+    port: 443
+    proto: tcp
+  tags: [firewall]
+
+- name: Allow HTTP (port 80)
+  ufw:
+    rule: allow
+    port: 80
+    proto: tcp
+  tags: [firewall]
+
+- name: Show UFW status
+  command: ufw status
+  register: ufw_status
+  tags: [firewall]
+
+- name: Display UFW rules
+  debug:
+    var: ufw_status.stdout_lines
+  tags: [firewall]
+
